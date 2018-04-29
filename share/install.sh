@@ -59,3 +59,22 @@ cd ~
 # TODO:
 # Put the instructions you want to execute for all
 # environments/machines here.
+
+# oh-my-zsh
+printYellow "Installing oh-my-zsh ..."
+ZSH_CUSTOM=~/.oh-my-zsh/custom
+# oh-my-zsh plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# oh-my-zsh themes
+mkdir -p $ZSH_CUSTOM/themes
+(cd $ZSH_CUSTOM/themes && git clone https://github.com/ileodo/dracula-zsh.git && ln -sfn dracula-zsh/dracula.zsh-theme)
+printGreen "Done"
+
+
+
+# Install Vundle for vim
+printYellow "Installing Vundle for vim ..."
+mkdir -p ~/.vim/bundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+printGreen "Done"

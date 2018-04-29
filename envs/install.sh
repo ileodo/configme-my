@@ -37,3 +37,10 @@ printGreen "Done"
 cd ~
 # TODO:
 # Put the additional instructions you want to execute here
+
+printYellow "Installing vim plugins ..."
+# Install vim vundle plugins
+mkdir -p ~/.vim
+vim +PluginInstall +qall
+printGreen "Done"
+

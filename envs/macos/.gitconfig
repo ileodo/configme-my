@@ -1,0 +1,5 @@
+[url "ssh://git@github/"]
+    insteadOf = https://github.com/
+
+[credential]
+    helper = osxkeychain

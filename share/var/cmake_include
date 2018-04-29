@@ -1,0 +1,54 @@
+# Function to load the search paths
+FUNCTION(R_SEARCH search_paths return_list)
+    SET(ret "")
+    FOREACH (search_path_ ${search_paths})
+        FILE(GLOB_RECURSE file_list_ "${search_path_}/*.h")
+        FOREACH (file_path_ ${file_list_})
+            GET_FILENAME_COMPONENT(dir_path_ ${file_path_} PATH)
+            LIST(APPEND ret ${dir_path_})
+        ENDFOREACH ()
+    ENDFOREACH ()
+    LIST(REMOVE_DUPLICATES ret)
+    SET(${return_list} ${ret} PARENT_SCOPE)
+ENDFUNCTION(R_SEARCH)
+
+# Set default PROJECT_ROOT if not defined
+if(NOT DEFINED PROJECT_ROOT)
+    SET(PROJECT_ROOT ${PROJECT_SOURCE_DIR})
+    MESSAGE(STATUS "Loading default PROJECT_ROOT: " ${PROJECT_ROOT})
+endif()
+
+MESSAGE( STATUS "PROJECT_ROOT: ${PROJECT_ROOT}" )
+
+# Load source files from PROJECT_ROOT
+SET(SOURCE_FILES "")
+FOREACH (project_root_ ${PROJECT_ROOT})
+    MESSAGE( STATUS "adding source file in:" ${project_root_})
+    FILE(GLOB_RECURSE file_list_
+            "${project_root_}/*.h"
+            "${project_root_}/*.cpp"
+            "${project_root_}/*.mk"
+            "${project_root_}/*.xml"
+    )
+    LIST(APPEND SOURCE_FILES ${file_list_})
+ENDFOREACH ()
+
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+
+R_SEARCH("${PROJECT_ROOT}" RECURSIVE_PROJECT_DIR_LISTS)
+include_directories(${RECURSIVE_PROJECT_DIR_LISTS})
+
+# Load refroot
+include_directories(
+    SYSTEM
+    /usr/include
+    /usr/local/include
+)
+
+# Load custom library paths
+SET(SEARCH_PATHS
+        ${SEARCH_PATHS}
+        )
+MESSAGE( STATUS "loading paths: ${SEARCH_PATHS}")
+R_SEARCH("${SEARCH_PATHS}" RECURSIVE_INCLUDE_DIR_LISTS)
+include_directories(${RECURSIVE_INCLUDE_DIR_LISTS})

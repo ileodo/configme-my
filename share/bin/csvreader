@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+if [ -t 0 ]
+then
+    data=$(cat $1)
+else
+    data=$(cat)
+fi
+
+echo "$data" | sed -e 's/,,/, ,/g' |column -s, -t | less -#1 -N -S

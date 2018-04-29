@@ -1,0 +1,11 @@
+.git/
+.git*
+.svn/
+.cvs/
+.idea/
+.DS_Store
+cmake-build-debug/
+build/
+*.pyc
+*.o
+*.tsk

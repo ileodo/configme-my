@@ -1,0 +1,24 @@
+# IDEA
+.idea
+*.iml
+cmake-build-debug
+
+# Build
+CMakeLists.txt
+build/
+*.tsk.mapfile
+
+
+# Utils
+libraries.pkgs
+tags
+.dpkg_manifest
+
+# System
+.DS_Store
+
+# doxygen
+*.doxygen
+
+# Local files
+*.local.cfg

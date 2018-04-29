@@ -1,0 +1,44 @@
+[user]
+    name = iLeoDo
+    email = iLeoDo@Gmail.com
+
+[core]
+    excludesfile = ~/.gitexcludes
+    editor = /usr/local/bin/vim
+    branch = auto
+    diff = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[commit]
+    template = ~/.gitmessage
+
+
+[alias]
+    ignore   = !git update-index --assume-unchanged
+    unignore = !git updtae-index --no-assume-unchanged
+    ignored = !git ls-files -v | grep ^[a-z]
+
+[push]
+    default = current
+[pull]
+    default = current
+
+[core]
+    include=~/._local/.gitconfig
+	autocrlf = false
