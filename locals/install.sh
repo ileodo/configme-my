@@ -35,6 +35,5 @@ printGreen "Done"
 # Other
 #--------------------
 cd ~
-
 # TODO:
 # Put the additional instructions you want to execute here
