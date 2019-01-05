@@ -5,5 +5,9 @@ source $_FILE_PATH_/../../utils/helpers.sh
 
 cd ~
 
+mkdir -p .config/karabiner
+
+(cd ~/.config/karabiner && ln -sfn $ENV_PATH/karabiner.json)
+
 ln -sfn $ENV_PATH/.mackup.cfg
 ln -sfn $ENV_PATH/.mackup

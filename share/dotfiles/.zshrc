@@ -50,7 +50,7 @@ export PATH=$HOME/._env/bin:$PATH
 export PATH=$HOME/._local/bin:$PATH
 
 export PATH=$HOME/.share/bin:$PATH
-export PATH=$HOME/.envs/bin:$PATH
+export PATH=$HOME/.env/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
 
