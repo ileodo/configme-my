@@ -66,7 +66,6 @@ export PYTHONPATH=./:$PYTHONPATH
 
 # Overrides
 #---------------
-alias -s py=vim
 alias -s tex=vim
 
 
