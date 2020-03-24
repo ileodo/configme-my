@@ -24,5 +24,11 @@ function tabc() {
     echo -e -n "\033]50;SetProfile=$NAME\a"
 }
 
+# qshell for qiniu cloud
+if [ $commands[qshell] ]; then
+  source <(qshell completion zsh)
+fi
+
+
 
 eval $(thefuck --alias)
