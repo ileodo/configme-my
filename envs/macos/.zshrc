@@ -3,7 +3,7 @@
 stty erase '^?'
 
 plugins+=(
-  brew brew-cask osx battery
+  brew osx battery
 )
 
 alias sudoedit="sudo vim"

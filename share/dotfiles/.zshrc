@@ -8,7 +8,7 @@ DISABLE_AUTO_TITLE="true"
 
 plugins=(
   git colorize sublime
-  themes autojump sudo
+  themes sudo
   python ruby node
   npm gem composer bower pip
   nvm rbenv
@@ -153,6 +153,18 @@ then
     source ~/._local/.zshrc
 fi
 
+### Fix slowness of pastes with zsh-syntax-highlighting.zsh
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+### Fix slowness of pastes
 
 echo "~/.zshrc has run"
 clear
