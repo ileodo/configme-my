@@ -8,12 +8,12 @@ DISABLE_AUTO_TITLE="true"
 
 plugins=(
   git colorize sublime
-  themes autojump sudo
+  themes sudo
   python ruby node
   npm gem composer bower pip
   nvm rbenv
   laravel5 rails bundler gulp
-  virtualenv virtualenvwrapper
+  virtualenv
   postgres
   zsh-autosuggestions zsh-syntax-highlighting
 )
