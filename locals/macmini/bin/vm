@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+VIEW=false
+CMD=()
+
+CMD_FLAG=false
+while [[ $# -gt 0 ]]
+do
+    key="$1"
+    case $key in
+        -h|--help)
+            if [[ "$CMD_FLAG" = false ]]; then
+                echo "Usage: vm [-h|--help] [-v|--view] [cmd]"
+                echo -e ""
+                echo -e "-v, --view     view the generated command, will not be executed"
+                echo -e "-h, --help     "
+                echo -e ""
+                echo -e "       cmd     should be wrapped by quotation mark"
+                exit 0
+            else
+                CMD+=("$1") # save it in an array for later
+                shift # past argument
+            fi
+        ;;
+        -v|--view)
+            if [[ "$CMD_FLAG" = false ]]; then
+                VIEW=true
+                shift # past value
+            else
+                CMD+=("$1") # save it in an array for later
+                shift # past argument
+            fi
+        ;;
+        *)    # unknown option
+            CMD_FLAG=true
+            CMD+=("$1") # save it in an array for later
+            shift # past argument
+        ;;
+    esac
+done
+set -- "${CMD[@]}" # restore positional parameters
+
+LOCAL_WORKSPACE=$HOME/workspace
+LOCAL_HUGE=$HOME/huge
+
+REMOTE_WORKSPACE="~/workspace"
+REMOTE_HUGE="~/huge"
+
+
+SUB_WS="s/${LOCAL_WORKSPACE//\//\\/}/${REMOTE_WORKSPACE//\//\\/}/"
+SUB_HUGE="s/${LOCAL_HUGE//\//\\/}/${REMOTE_HUGE//\//\\/}/"
+
+REMOTE_PATH=$(echo $PWD | sed -e "$SUB_WS" | sed -e "$SUB_HUGE")
+REMOTE_CMD=$(echo "$@" | sed -e "$SUB_WS" | sed -e "$SUB_HUGE")
+
+if ! [[ $REMOTE_PATH =~ ^$REMOTE_WORKSPACE ]] && ! [[ $REMOTE_PATH =~ ^$REMOTE_HUGE  ]]; then
+    echo "Path $PWD is not supported!"
+    exit -1
+fi
+
+if [[ $VIEW = true ]]; then
+    echo "Running '$@' on $MACHINE : $REMOTE_PATH"
+    exit 0
+fi
+
+if [[ "$#" = 0 ]]; then
+    ssh -t vm "cd $REMOTE_PATH;zsh --login"
+else
+    echo "Running '$@' on $REMOTE_PATH"
+    ssh vm "source ~/.zshrc; cd $REMOTE_PATH;$REMOTE_CMD"
+fi
