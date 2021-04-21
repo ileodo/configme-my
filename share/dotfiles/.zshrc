@@ -12,8 +12,6 @@ plugins=(
   python ruby node
   npm gem composer bower pip
   nvm rbenv
-  laravel5 rails bundler gulp
-  virtualenv
   postgres
   zsh-autosuggestions zsh-syntax-highlighting
 )
