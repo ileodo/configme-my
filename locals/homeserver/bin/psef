@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# architecture aware version, fixed for ppc
+if [[ $# -eq 0 ]] ; then
+   echo >&2 "Usage: $0 taskstring"
+   exit 1
+fi
+
+
+
+STR="$1"
+shift
+while [ "$1" != "" ] ; do
+    STR="${STR}|$1"
+    shift
+done
+
+
+tmpdir=/tmp
+tempfile=${tmpdir}/psef.$$
+typeset -i iter=0
+while [ -a $tempfile ] ; do
+    let iter=iter+1
+    tempfile=${tmpdir}/psef.$$.$iter
+done
+
+RM=/usr/bin/rm
+if [ -x /bin/rm ]; then
+    RM=/bin/rm
+fi
+trap "$RM -f $tempfile" EXIT
+
+ echo -e "USER\t\t   PID\tPPID\tSTIME\tTTY\tTIME\tCOMMAND"
+ ps -e -o user,pid,ppid,stime,tty,time,args >$tempfile
+
+
+# Filter out this script from the psef output
+egrep "$STR" $tempfile | egrep -v "$$.*psef"
+
+exit 0
